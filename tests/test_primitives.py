@@ -5,6 +5,8 @@ from math import cos, pi
 
 from parametric_cad.primitives.box import Box
 from parametric_cad.primitives.gear import SpurGear
+from parametric_cad.primitives.cylinder import Cylinder
+from parametric_cad.primitives.sphere import Sphere
 
 
 def test_box_mesh_extents_and_position():
@@ -21,3 +23,14 @@ def test_spur_gear_diameters():
     assert gear.pitch_diameter == pytest.approx(20.0)
     expected_base = gear.pitch_diameter * cos(20 * pi / 180)
     assert gear.base_diameter == pytest.approx(expected_base)
+
+
+def test_cylinder_and_sphere_meshes():
+    cyl = Cylinder(radius=1.0, height=2.0).at(0.5, 0.5, 0)
+    sph = Sphere(radius=1.0).at(-0.5, -0.5, 0)
+    cyl_mesh = cyl.mesh()
+    sph_mesh = sph.mesh()
+    assert isinstance(cyl_mesh, trimesh.Trimesh)
+    assert isinstance(sph_mesh, trimesh.Trimesh)
+    assert cyl_mesh.is_watertight
+    assert sph_mesh.is_watertight
