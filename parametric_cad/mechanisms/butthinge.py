@@ -19,7 +19,7 @@ class ButtHinge:
         self.leaf_thickness = float(leaf_thickness)
         self.knuckles = max(3, int(knuckles))  # Minimum 3 knuckles for stability
         self.pin_diameter = float(pin_diameter)
-        self.mesh = self._create_hinge()
+        self._mesh = self._create_hinge()
         self.exporter = STLExporter()
 
     def _create_hinge(self):
@@ -58,9 +58,18 @@ class ButtHinge:
         hinge = trimesh.util.concatenate([leaf1, leaf2] + knuckle_meshes)
         return hinge
 
+    def mesh(self):
+        """Return the hinge mesh."""
+        return self._mesh
+
+    def at(self, x, y, z):
+        """Translate hinge to a position."""
+        self._mesh.apply_translation([x, y, z])
+        return self
+
     def export(self, filename):
         """Export the hinge mesh using STLExporter."""
-        self.exporter.export_mesh(self.mesh, filename)
+        self.exporter.export_mesh(self._mesh, filename)
 
 if __name__ == "__main__":
     # Example usage

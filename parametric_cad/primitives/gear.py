@@ -91,7 +91,14 @@ class SpurGear:
 
         bore = trimesh.creation.cylinder(radius=self.bore_diameter / 2, height=self.width + 0.1)
         bore.apply_translation([0, 0, self.width / 2])
-        gear = gear_body.difference(bore, engine='scad')
+        try:
+            gear = gear_body.difference(bore, engine='scad')
+        except Exception:
+            try:
+                gear = gear_body.difference(bore)
+            except Exception:
+                logging.warning("Boolean difference not available, skipping bore subtraction")
+                gear = gear_body
         logging.debug(f"Subtracted bore, resulting mesh has {len(gear.vertices)} vertices")
 
         if self.hole_count > 0:
@@ -105,7 +112,13 @@ class SpurGear:
                 if not hole.is_volume:
                     hole = hole.convex_hull
                 hole_cylinders.append(hole)
-            gear = gear.difference(hole_cylinders, engine='scad')
+            try:
+                gear = gear.difference(hole_cylinders, engine='scad')
+            except Exception:
+                try:
+                    gear = gear.difference(hole_cylinders)
+                except Exception:
+                    logging.warning("Boolean difference not available, skipping hole subtraction")
             logging.debug(f"Subtracted {self.hole_count} holes, resulting mesh has {len(gear.vertices)} vertices")
 
         if not gear.is_watertight:
