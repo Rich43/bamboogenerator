@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 import logging
+import requests
 
 logging.basicConfig(filename='install_debug.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -13,7 +14,7 @@ def download_openscad():
         logging.error("openscad_download_url.txt not found! Please run scrape_openscad_download.py first.")
         print("openscad_download_url.txt not found! Please run scrape_openscad_download.py first to get the latest URL.")
         sys.exit(1)
-    
+
     installer = os.path.basename(url)
     logging.debug(f"Attempting to download OpenSCAD from {url}")
     print("Downloading OpenSCAD installer...")
@@ -26,13 +27,13 @@ def download_openscad():
                 f.write(chunk)
         logging.info(f"Download completed, saved as {installer}")
         print("Download completed.")
-        return True
+        return url
     except requests.RequestException as e:
         logging.error(f"Download failed: {e}")
         print(f"Failed to download OpenSCAD installer: {e}")
-        return False
+        return None
 
-def install_openscad():
+def install_openscad(url):
     installer = os.path.basename(url)  # Use the same name as downloaded
     logging.debug(f"Checking if installer exists at {installer}")
     if not os.path.exists(installer):
@@ -52,7 +53,7 @@ def install_openscad():
         print(f"Installation failed: {e}")
         return False
 
-def cleanup():
+def cleanup(url):
     installer = os.path.basename(url)
     logging.debug(f"Checking for cleanup of {installer}")
     if os.path.exists(installer):
@@ -61,14 +62,14 @@ def cleanup():
         print("Cleaned up installer file.")
 
 if __name__ == "__main__":
-    import requests  # Import here to avoid circular dependency issues
     logging.debug("Starting install_openscad.py execution")
-    if not download_openscad():
+    url = download_openscad()
+    if not url:
         sys.exit(1)
-    if not install_openscad():
-        cleanup()
+    if not install_openscad(url):
+        cleanup(url)
         sys.exit(1)
-    cleanup()
+    cleanup(url)
     logging.info("OpenSCAD installation process completed")
     print("Please ensure OpenSCAD is added to your system PATH.")
     print("You may need to restart your command prompt or system for changes to take effect.")
