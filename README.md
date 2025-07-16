@@ -12,15 +12,13 @@ Python scripts for generating 3D printable models using the
 ## Installation
 
 Install the required Python packages and configure OpenSCAD using the
-provided installer script.  From the desired project directory run:
+installer script in the repository root.  From the desired project directory run:
 
 ```bash
 python install_requirements.py
 ```
 
-This installs all Python dependencies and attempts to set up
-`trimesh` for OpenSCAD rendering.  Each top‑level project folder has
-its own copy of this script.
+This installs all Python dependencies and attempts to set up `trimesh` for OpenSCAD rendering.
 
 ## Running the examples
 
@@ -31,6 +29,7 @@ from `parametric_cad/examples/`, for example:
 export PYTHONPATH=.
 python parametric_cad/examples/spur_gear_example.py
 ```
+You can also run all examples at once using `run_examples.py` or the `run_examples.bat` script on Windows.
 
 Generated STL files are written to `output/<example>_output/`.
 
