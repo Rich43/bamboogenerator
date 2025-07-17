@@ -2,6 +2,7 @@
 
 from .core import tm, safe_difference, combine
 from .geometry import sg, Polygon, Point, box
+from .primitives.base import Primitive
 from .primitives.box import Box
 from .primitives.cylinder import Cylinder
 from .primitives.gear import SpurGear
@@ -15,6 +16,7 @@ __all__ = [
     "sg",
     "safe_difference",
     "combine",
+    "Primitive",
     "Box",
     "Cylinder",
     "Sphere",

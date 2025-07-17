@@ -1,17 +1,15 @@
 from parametric_cad.core import tm
+from .base import Primitive
 
-class Sphere:
-    def __init__(self, radius, subdivisions=3):
+
+class Sphere(Primitive):
+    def __init__(self, radius: float, subdivisions: int = 3) -> None:
+        super().__init__()
         self.radius = radius
         self.subdivisions = subdivisions
-        self._position = (0, 0, 0)
 
-    def at(self, x, y, z):
-        self._position = (x, y, z)
-        return self
-
-    def mesh(self):
-        sph = tm.creation.icosphere(subdivisions=self.subdivisions,
-                                    radius=self.radius)
-        sph.apply_translation(self._position)
-        return sph
+    def _create_mesh(self) -> tm.Trimesh:
+        return tm.creation.icosphere(
+            subdivisions=self.subdivisions,
+            radius=self.radius,
+        )

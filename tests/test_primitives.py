@@ -3,6 +3,7 @@ import numpy as np
 from parametric_cad.core import tm, safe_difference, combine
 from math import cos, sin, pi
 
+from parametric_cad.primitives.base import Primitive
 from parametric_cad.primitives.box import Box
 from parametric_cad.primitives.gear import SpurGear
 from parametric_cad.primitives.cylinder import Cylinder
@@ -60,3 +61,11 @@ def test_chain_sprocket_properties_and_mesh():
     mesh = sprocket.mesh()
     assert isinstance(mesh, tm.Trimesh)
     assert mesh.is_watertight
+
+
+def test_primitive_inheritance():
+    assert isinstance(Box(1, 1, 1), Primitive)
+    assert isinstance(Cylinder(1, 1), Primitive)
+    assert isinstance(Sphere(1), Primitive)
+    assert isinstance(SpurGear(module=1.0, teeth=8), Primitive)
+    assert isinstance(ChainSprocket(), Primitive)
