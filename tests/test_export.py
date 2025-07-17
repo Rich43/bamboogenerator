@@ -1,9 +1,11 @@
 import os
-from parametric_cad.core import tm
+from pathlib import Path
 from parametric_cad.primitives.box import Box
 from parametric_cad.primitives.cylinder import Cylinder
 from parametric_cad.primitives.sphere import Sphere
 from parametric_cad.export.stl import STLExporter
+
+EXPECTED_DIR = Path(__file__).parent / "expected_stl"
 
 
 def test_stl_exporter(tmp_path):
@@ -14,14 +16,8 @@ def test_stl_exporter(tmp_path):
     assert path == str(tmp_path / "test_box.stl")
     with open(path, "r", encoding="utf-8") as f:
         contents = f.read()
-    mesh = tm.util.concatenate([box.mesh()])
-    if not mesh.is_watertight or mesh.vertices.shape[0] == 0:
-        repaired = mesh.fill_holes()
-        if repaired is not False:
-            mesh = repaired
-        else:
-            mesh = mesh.convex_hull
-    expected = tm.exchange.stl.export_stl_ascii(mesh)
+    with open(EXPECTED_DIR / "test_box.stl", "r", encoding="utf-8") as f:
+        expected = f.read()
     assert contents == expected
 
 
@@ -35,12 +31,6 @@ def test_ascii_stl_multiple_objects(tmp_path):
     assert path == str(tmp_path / "combo.stl")
     with open(path, "r", encoding="utf-8") as f:
         contents = f.read()
-    mesh = tm.util.concatenate([box.mesh(), cyl.mesh(), sph.mesh()])
-    if not mesh.is_watertight or mesh.vertices.shape[0] == 0:
-        repaired = mesh.fill_holes()
-        if repaired is not False:
-            mesh = repaired
-        else:
-            mesh = mesh.convex_hull
-    expected = tm.exchange.stl.export_stl_ascii(mesh)
+    with open(EXPECTED_DIR / "combo.stl", "r", encoding="utf-8") as f:
+        expected = f.read()
     assert contents == expected
