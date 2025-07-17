@@ -33,6 +33,28 @@ You can also run all examples at once using the cross-platform `run_examples.py`
 
 Generated STL files are written to `output/<example>_output/`.
 
+## Combining Primitives
+
+Functions `combine` and `safe_difference` from
+[`parametric_cad/core.py`](parametric_cad/core.py) help manipulate meshes.
+
+- **`combine(objects)`** – returns the union of the provided meshes or
+  primitives by concatenating their geometry.
+- **`safe_difference(mesh, other)`** – subtracts one mesh (or list of meshes)
+  from another and gracefully falls back to the original mesh if the boolean
+  operation fails.
+
+Example:
+
+```python
+from parametric_cad.primitives import Box, Cylinder
+from parametric_cad.core import combine, safe_difference
+
+boxes = [Box(1, 1, 1).at(x, 0, 0) for x in range(3)]
+unioned = combine(boxes)
+result = safe_difference(unioned, Cylinder(0.5, 1).mesh())
+```
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
