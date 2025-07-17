@@ -1,9 +1,9 @@
 """Consolidated parametric_cad package."""
 
-from .core import tm
+from .core import tm, safe_difference
 from .primitives.box import Box
 from .primitives.gear import SpurGear
 from .mechanisms.butthinge import ButtHinge
 from .export.stl import STLExporter
 
-__all__ = ["tm", "Box", "SpurGear", "ButtHinge", "STLExporter"]
+__all__ = ["tm", "safe_difference", "Box", "SpurGear", "ButtHinge", "STLExporter"]
