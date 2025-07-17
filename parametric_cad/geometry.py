@@ -13,22 +13,26 @@ sg = _geometry
 
 # Convenience factory functions wrapping ``shapely.geometry``
 
-def Polygon(*args, **kwargs):
+def Polygon(shell, holes=None):
     """Return a :class:`shapely.geometry.Polygon` instance."""
 
-    return sg.Polygon(*args, **kwargs)
+    return sg.Polygon(shell, holes=holes)
 
 
-def Point(*args, **kwargs):
+def Point(x, y=None, z=None):
     """Return a :class:`shapely.geometry.Point` instance."""
 
-    return sg.Point(*args, **kwargs)
+    if z is not None:
+        return sg.Point(x, y, z)
+    if y is not None:
+        return sg.Point(x, y)
+    return sg.Point(x)
 
 
-def box(*args, **kwargs):
+def box(minx, miny, maxx, maxy, ccw=True):
     """Return a rectangular polygon as defined by :func:`shapely.geometry.box`."""
 
-    return sg.box(*args, **kwargs)
+    return sg.box(minx, miny, maxx, maxy, ccw=ccw)
 
 
 __all__ = ["sg", "Polygon", "Point", "box"]
