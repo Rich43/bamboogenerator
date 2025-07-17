@@ -1,4 +1,4 @@
-import trimesh
+from parametric_cad.core import tm
 import numpy as np
 from parametric_cad.export.stl import STLExporter
 
@@ -35,7 +35,7 @@ class ButtHinge:
             [0, 1, 5], [0, 5, 4], [2, 3, 7], [2, 7, 6],
             [0, 3, 7], [0, 7, 4], [1, 2, 6], [1, 6, 5]
         ])
-        leaf1 = trimesh.Trimesh(vertices=leaf_vertices, faces=leaf_faces, process=False)
+        leaf1 = tm.Trimesh(vertices=leaf_vertices, faces=leaf_faces, process=False)
 
         # Second leaf, offset for hinge alignment
         leaf2 = leaf1.copy()
@@ -46,7 +46,7 @@ class ButtHinge:
         knuckle_spacing = self.leaf_length / (self.knuckles + 1)
         for i in range(self.knuckles):
             z_pos = knuckle_spacing * (i + 1)
-            knuckle = trimesh.creation.cylinder(
+            knuckle = tm.creation.cylinder(
                 radius=self.pin_diameter / 2,
                 height=self.leaf_thickness + 0.1,  # Slight overlap for union
                 sections=16
@@ -55,7 +55,7 @@ class ButtHinge:
             knuckle_meshes.append(knuckle)
 
         # Combine leaves and knuckles
-        hinge = trimesh.util.concatenate([leaf1, leaf2] + knuckle_meshes)
+        hinge = tm.util.concatenate([leaf1, leaf2] + knuckle_meshes)
         return hinge
 
     def mesh(self):

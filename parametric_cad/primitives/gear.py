@@ -1,5 +1,5 @@
 import numpy as np
-import trimesh
+from parametric_cad.core import tm
 from shapely.geometry import Polygon
 from math import pi, sin, cos, tan
 import logging
@@ -75,21 +75,21 @@ class SpurGear:
             polygon = polygon.buffer(0)
             logging.warning("Tooth polygon was invalid, repaired with buffer")
 
-        tooth_mesh = trimesh.creation.extrude_polygon(polygon, self.width, engine='triangle')
+        tooth_mesh = tm.creation.extrude_polygon(polygon, self.width, engine='triangle')
         logging.debug(f"Extruded tooth mesh with {len(tooth_mesh.vertices)} vertices")
 
         all_teeth = []
         for i in range(self.teeth):
             angle = 2 * pi * i / self.teeth
-            rot = trimesh.transformations.rotation_matrix(angle, [0, 0, 1])
+            rot = tm.transformations.rotation_matrix(angle, [0, 0, 1])
             rotated_tooth = tooth_mesh.copy().apply_transform(rot)
             all_teeth.append(rotated_tooth)
             logging.debug(f"Added tooth {i+1}/{self.teeth}")
 
-        gear_body = trimesh.util.concatenate(all_teeth)
+        gear_body = tm.util.concatenate(all_teeth)
         logging.debug(f"Combined {self.teeth} teeth into gear body with {len(gear_body.vertices)} vertices")
 
-        bore = trimesh.creation.cylinder(radius=self.bore_diameter / 2, height=self.width + 0.1)
+        bore = tm.creation.cylinder(radius=self.bore_diameter / 2, height=self.width + 0.1)
         bore.apply_translation([0, 0, self.width / 2])
         try:
             gear = gear_body.difference(bore, engine='scad')
@@ -107,7 +107,7 @@ class SpurGear:
                 angle = 2 * pi * i / self.hole_count
                 x = cos(angle) * self.hole_radius
                 y = sin(angle) * self.hole_radius
-                hole = trimesh.creation.cylinder(radius=self.hole_diameter / 2, height=self.width + 0.1)
+                hole = tm.creation.cylinder(radius=self.hole_diameter / 2, height=self.width + 0.1)
                 hole.apply_translation([x, y, self.width / 2])
                 if not hole.is_volume:
                     hole = hole.convex_hull

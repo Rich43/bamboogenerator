@@ -1,5 +1,4 @@
-import trimesh
-import trimesh.exchange.stl
+from parametric_cad.core import tm
 import os
 import logging
 import numpy as np
@@ -18,7 +17,7 @@ class STLExporter:
         os.makedirs(self.output_dir, exist_ok=True)
 
     def _ensure_mesh(self, obj):
-        if isinstance(obj, trimesh.Trimesh):
+        if isinstance(obj, tm.Trimesh):
             return obj
         if hasattr(obj, "mesh"):
             m = obj.mesh
@@ -31,7 +30,7 @@ class STLExporter:
 
     def export_meshes(self, objs, base_filename, timestamp=False, preview=True):
         meshes = [self._ensure_mesh(o) for o in objs]
-        combined = trimesh.util.concatenate(meshes)
+        combined = tm.util.concatenate(meshes)
         if not combined.is_watertight or combined.vertices.shape[0] == 0:
             repaired = combined.fill_holes()
             if repaired is not False:
@@ -47,7 +46,7 @@ class STLExporter:
         if self.binary:
             combined.export(path, file_type="stl")
         else:
-            text = trimesh.exchange.stl.export_stl_ascii(combined)
+            text = tm.exchange.stl.export_stl_ascii(combined)
             with open(path, "w", encoding="utf-8") as f:
                 f.write(text)
         logging.info(f"Exported STL to {path}")

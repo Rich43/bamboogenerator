@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-import trimesh
+from parametric_cad.core import tm
 from math import cos, pi
 
 from parametric_cad.primitives.box import Box
@@ -30,7 +30,7 @@ def test_cylinder_and_sphere_meshes():
     sph = Sphere(radius=1.0).at(-0.5, -0.5, 0)
     cyl_mesh = cyl.mesh()
     sph_mesh = sph.mesh()
-    assert isinstance(cyl_mesh, trimesh.Trimesh)
-    assert isinstance(sph_mesh, trimesh.Trimesh)
+    assert isinstance(cyl_mesh, tm.Trimesh)
+    assert isinstance(sph_mesh, tm.Trimesh)
     assert cyl_mesh.is_watertight
     assert sph_mesh.is_watertight
