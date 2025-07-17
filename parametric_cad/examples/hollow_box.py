@@ -1,6 +1,5 @@
 from parametric_cad.primitives.box import Box
 from parametric_cad.export.stl import STLExporter
-import trimesh
 
 outer = Box(100, 60, 40).at(0, 0, 0)
 inner = Box(90, 50, 30).at(5, 5, 5)

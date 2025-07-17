@@ -1,4 +1,4 @@
-import trimesh
+from parametric_cad.core import tm
 
 class Cylinder:
     def __init__(self, radius, height, sections=32):
@@ -12,7 +12,7 @@ class Cylinder:
         return self
 
     def mesh(self):
-        cyl = trimesh.creation.cylinder(radius=self.radius, height=self.height,
-                                        sections=self.sections)
+        cyl = tm.creation.cylinder(radius=self.radius, height=self.height,
+                                   sections=self.sections)
         cyl.apply_translation(self._position)
         return cyl

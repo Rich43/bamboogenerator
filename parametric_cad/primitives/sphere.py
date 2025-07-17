@@ -1,4 +1,4 @@
-import trimesh
+from parametric_cad.core import tm
 
 class Sphere:
     def __init__(self, radius, subdivisions=3):
@@ -11,7 +11,7 @@ class Sphere:
         return self
 
     def mesh(self):
-        sph = trimesh.creation.icosphere(subdivisions=self.subdivisions,
-                                         radius=self.radius)
+        sph = tm.creation.icosphere(subdivisions=self.subdivisions,
+                                    radius=self.radius)
         sph.apply_translation(self._position)
         return sph

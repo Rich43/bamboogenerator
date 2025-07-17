@@ -1,4 +1,4 @@
-import trimesh
+from parametric_cad.core import tm
 
 class Box:
     def __init__(self, width, depth, height):
@@ -12,6 +12,6 @@ class Box:
         return self
 
     def mesh(self):
-        box = trimesh.creation.box(extents=(self.width, self.depth, self.height))
+        box = tm.creation.box(extents=(self.width, self.depth, self.height))
         box.apply_translation(self._position)
         return box

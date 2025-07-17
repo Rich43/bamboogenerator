@@ -1,6 +1,6 @@
 import os
 import sys
-import trimesh
+from parametric_cad.core import tm
 import logging
 
 logging.basicConfig(filename='install_debug.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -15,12 +15,12 @@ def configure_trimesh_scad():
     print("Configuring trimesh to use OpenSCAD engine...")
     logging.info("Checking trimesh module availability")
 
-    # Check if trimesh is available
+    # Check if trimesh (the mesh backend) is available
     try:
-        import trimesh
+        _ = tm.__version__
         logging.info("trimesh module found")
         print("trimesh module found.")
-    except ImportError:
+    except Exception:
         logging.error("trimesh module not found")
         print("trimesh module not found! Please ensure it is installed via 'pip install trimesh'.")
         sys.exit(1)
