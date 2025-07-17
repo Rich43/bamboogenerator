@@ -1,15 +1,19 @@
-from typing import Sequence
+from dataclasses import dataclass
 
 from parametric_cad.core import tm
 from .base import Primitive
 
 
+@dataclass
 class Cylinder(Primitive):
-    def __init__(self, radius: float, height: float, sections: int = 32) -> None:
+    """Circular cylinder primitive."""
+
+    radius: float
+    height: float
+    sections: int = 32
+
+    def __post_init__(self) -> None:
         super().__init__()
-        self.radius = radius
-        self.height = height
-        self.sections = sections
 
     def _create_mesh(self) -> tm.Trimesh:
         return tm.creation.cylinder(
