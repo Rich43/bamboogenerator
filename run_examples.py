@@ -52,7 +52,8 @@ if __name__ == "__main__":
     examples = [
         "box_with_door.py",
         "hollow_box.py",
-        "spur_gear_example.py"
+        "spur_gear_example.py",
+        "sprocket_example.py",
     ]
     
     for example in examples:

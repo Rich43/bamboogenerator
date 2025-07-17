@@ -1,12 +1,13 @@
 import pytest
 import numpy as np
 from parametric_cad.core import tm, safe_difference
-from math import cos, pi
+from math import cos, sin, pi
 
 from parametric_cad.primitives.box import Box
 from parametric_cad.primitives.gear import SpurGear
 from parametric_cad.primitives.cylinder import Cylinder
 from parametric_cad.primitives.sphere import Sphere
+from parametric_cad.primitives.sprocket import ChainSprocket
 
 
 def test_box_mesh_extents_and_position():
@@ -41,3 +42,12 @@ def test_safe_difference_returns_mesh():
     inner = Box(0.5, 0.5, 0.5).at(0.25, 0.25, 0.25)
     result = safe_difference(outer.mesh(), inner.mesh(), engine="invalid")
     assert isinstance(result, tm.Trimesh)
+
+
+def test_chain_sprocket_properties_and_mesh():
+    sprocket = ChainSprocket(pitch=12.7, roller_diameter=7.75, teeth=10)
+    expected_pitch_dia = 2 * sprocket.pitch / (2 * sin(pi / sprocket.teeth))
+    assert sprocket.pitch_diameter == pytest.approx(expected_pitch_dia)
+    mesh = sprocket.mesh()
+    assert isinstance(mesh, tm.Trimesh)
+    assert mesh.is_watertight
