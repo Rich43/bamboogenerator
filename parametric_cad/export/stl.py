@@ -12,7 +12,7 @@ logging.basicConfig(filename='stl_export.log', level=logging.INFO,
 class STLExporter:
     """Export trimesh objects to STL with optional previews."""
 
-    def __init__(self, output_dir="output", binary=True):
+    def __init__(self, output_dir="output", binary=False):
         self.output_dir = output_dir
         self.binary = binary
         os.makedirs(self.output_dir, exist_ok=True)
