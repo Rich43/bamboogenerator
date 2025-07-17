@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from parametric_cad.core import tm
+from parametric_cad.core import tm, safe_difference
 from math import cos, pi
 
 from parametric_cad.primitives.box import Box
@@ -34,3 +34,10 @@ def test_cylinder_and_sphere_meshes():
     assert isinstance(sph_mesh, tm.Trimesh)
     assert cyl_mesh.is_watertight
     assert sph_mesh.is_watertight
+
+
+def test_safe_difference_returns_mesh():
+    outer = Box(1.0, 1.0, 1.0)
+    inner = Box(0.5, 0.5, 0.5).at(0.25, 0.25, 0.25)
+    result = safe_difference(outer.mesh(), inner.mesh(), engine="invalid")
+    assert isinstance(result, tm.Trimesh)

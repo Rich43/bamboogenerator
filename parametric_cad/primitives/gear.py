@@ -1,5 +1,5 @@
 import numpy as np
-from parametric_cad.core import tm
+from parametric_cad.core import tm, safe_difference
 from shapely.geometry import Polygon
 from math import pi, sin, cos, tan
 import logging
@@ -91,14 +91,7 @@ class SpurGear:
 
         bore = tm.creation.cylinder(radius=self.bore_diameter / 2, height=self.width + 0.1)
         bore.apply_translation([0, 0, self.width / 2])
-        try:
-            gear = gear_body.difference(bore, engine='scad')
-        except Exception:
-            try:
-                gear = gear_body.difference(bore)
-            except Exception:
-                logging.warning("Boolean difference not available, skipping bore subtraction")
-                gear = gear_body
+        gear = safe_difference(gear_body, bore)
         logging.debug(f"Subtracted bore, resulting mesh has {len(gear.vertices)} vertices")
 
         if self.hole_count > 0:
@@ -112,13 +105,7 @@ class SpurGear:
                 if not hole.is_volume:
                     hole = hole.convex_hull
                 hole_cylinders.append(hole)
-            try:
-                gear = gear.difference(hole_cylinders, engine='scad')
-            except Exception:
-                try:
-                    gear = gear.difference(hole_cylinders)
-                except Exception:
-                    logging.warning("Boolean difference not available, skipping hole subtraction")
+            gear = safe_difference(gear, hole_cylinders)
             logging.debug(f"Subtracted {self.hole_count} holes, resulting mesh has {len(gear.vertices)} vertices")
 
         if not gear.is_watertight:
