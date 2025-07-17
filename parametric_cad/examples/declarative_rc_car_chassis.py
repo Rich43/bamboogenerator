@@ -9,6 +9,9 @@ from parametric_cad.primitives.box import Box
 from parametric_cad.primitives.cylinder import Cylinder
 from parametric_cad.core import combine, safe_difference, tm
 from parametric_cad.export.stl import STLExporter
+from parametric_cad.logging_config import setup_logging
+
+setup_logging()
 
 # Basic chassis dimensions (all units in mm)
 BASE_LENGTH = 200.0

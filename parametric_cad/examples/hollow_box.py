@@ -1,6 +1,9 @@
 from parametric_cad.primitives.box import Box
 from parametric_cad.export.stl import STLExporter
 from parametric_cad.core import safe_difference
+from parametric_cad.logging_config import setup_logging
+
+setup_logging()
 
 outer = Box(100, 60, 40).at(0, 0, 0)
 inner = Box(90, 50, 30).at(5, 5, 5)
