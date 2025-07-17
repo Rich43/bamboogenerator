@@ -6,6 +6,7 @@ from .primitives.box import Box
 from .primitives.cylinder import Cylinder
 from .primitives.gear import SpurGear
 from .primitives.sprocket import ChainSprocket
+from .primitives.sphere import Sphere
 from .mechanisms.butthinge import ButtHinge
 from .export.stl import STLExporter
 
@@ -16,6 +17,7 @@ __all__ = [
     "combine",
     "Box",
     "Cylinder",
+    "Sphere",
     "SpurGear",
     "ChainSprocket",
     "ButtHinge",
