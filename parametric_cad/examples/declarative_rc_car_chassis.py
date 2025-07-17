@@ -3,7 +3,7 @@
 
 from math import pi
 
-from shapely.geometry import box, Point
+from parametric_cad.geometry import box, Point
 
 from parametric_cad.primitives.box import Box
 from parametric_cad.primitives.cylinder import Cylinder

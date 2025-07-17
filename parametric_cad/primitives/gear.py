@@ -1,6 +1,6 @@
 import numpy as np
 from parametric_cad.core import tm, safe_difference
-from shapely.geometry import Polygon
+from parametric_cad.geometry import Polygon
 from math import pi, sin, cos, tan
 import logging
 
