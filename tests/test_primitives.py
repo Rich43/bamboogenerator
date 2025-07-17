@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from parametric_cad.core import tm, safe_difference
+from parametric_cad.core import tm, safe_difference, combine
 from math import cos, sin, pi
 
 from parametric_cad.primitives.box import Box
@@ -42,6 +42,15 @@ def test_safe_difference_returns_mesh():
     inner = Box(0.5, 0.5, 0.5).at(0.25, 0.25, 0.25)
     result = safe_difference(outer.mesh(), inner.mesh(), engine="invalid")
     assert isinstance(result, tm.Trimesh)
+
+
+def test_combine_and_rotation():
+    box = Box(1.0, 1.0, 1.0)
+    cyl = Cylinder(radius=0.5, height=2.0).rotate([1, 0, 0], pi / 2)
+    combined = combine([box, cyl])
+    assert isinstance(combined, tm.Trimesh)
+    # Cylinder rotated around X should extend its height along Y axis
+    assert combined.extents[1] >= 2.0
 
 
 def test_chain_sprocket_properties_and_mesh():

@@ -7,6 +7,7 @@ wrapper allows the backend to be swapped or mocked easily.
 """
 
 import trimesh as _trimesh
+from typing import Iterable, Any
 
 
 def safe_difference(mesh, other, *, engine="scad"):
@@ -42,4 +43,21 @@ def safe_difference(mesh, other, *, engine="scad"):
 # importing ``trimesh`` themselves.
 tm = _trimesh
 
-__all__ = ["tm", "safe_difference"]
+def combine(objects: Iterable[Any]) -> _trimesh.Trimesh:
+    """Return a union of ``objects``.
+
+    Each object may be a :class:`~trimesh.Trimesh` or have a ``mesh``
+    method returning one.
+    """
+    meshes = []
+    for obj in objects:
+        if isinstance(obj, _trimesh.Trimesh):
+            meshes.append(obj)
+        elif hasattr(obj, "mesh"):
+            m = obj.mesh
+            meshes.append(m() if callable(m) else m)
+        else:
+            raise TypeError(f"Object {obj!r} cannot be converted to a mesh")
+    return _trimesh.util.concatenate(meshes)
+
+__all__ = ["tm", "safe_difference", "combine"]
