@@ -1,17 +1,13 @@
 from parametric_cad.core import tm
+from .base import Primitive
 
-class Box:
-    def __init__(self, width, depth, height):
+
+class Box(Primitive):
+    def __init__(self, width: float, depth: float, height: float) -> None:
+        super().__init__()
         self.width = width
         self.depth = depth
         self.height = height
-        self._position = (0, 0, 0)
 
-    def at(self, x, y, z):
-        self._position = (x, y, z)
-        return self
-
-    def mesh(self):
-        box = tm.creation.box(extents=(self.width, self.depth, self.height))
-        box.apply_translation(self._position)
-        return box
+    def _create_mesh(self) -> tm.Trimesh:
+        return tm.creation.box(extents=(self.width, self.depth, self.height))
