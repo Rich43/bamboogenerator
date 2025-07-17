@@ -1,5 +1,8 @@
 from parametric_cad.primitives.sprocket import ChainSprocket
 from parametric_cad.export.stl import STLExporter
+from parametric_cad.logging_config import setup_logging
+
+setup_logging()
 
 # Example sprocket for #420 chain (pitch 12.7 mm, roller dia ~7.75 mm)
 

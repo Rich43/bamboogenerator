@@ -8,14 +8,6 @@ from parametric_cad.core import safe_difference, tm
 from parametric_cad.geometry import Polygon
 from .base import Primitive
 
-# Set up logging to file
-logging.basicConfig(
-    filename="gear_debug.log",
-    level=logging.DEBUG,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
-
-
 class SpurGear(Primitive):
     def __init__(
         self,

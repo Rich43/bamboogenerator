@@ -4,6 +4,9 @@ from parametric_cad.primitives.box import Box
 from parametric_cad.primitives.cylinder import Cylinder
 from parametric_cad.core import combine, safe_difference
 from parametric_cad.export.stl import STLExporter
+from parametric_cad.logging_config import setup_logging
+
+setup_logging()
 
 # Basic dimensions for a 540/550 motor bracket
 BASE_LENGTH = 50.0

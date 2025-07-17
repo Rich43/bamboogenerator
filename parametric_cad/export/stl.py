@@ -5,9 +5,6 @@ import numpy as np
 from pathlib import Path
 from datetime import datetime
 
-logging.basicConfig(filename='stl_export.log', level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
 class STLExporter:
     """Export trimesh objects to STL with optional previews."""
 
