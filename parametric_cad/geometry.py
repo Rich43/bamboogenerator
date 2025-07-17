@@ -11,9 +11,24 @@ import shapely.geometry as _geometry
 # without referencing :mod:`shapely` directly.
 sg = _geometry
 
-# Commonly used geometry primitives
-Polygon = sg.Polygon
-Point = sg.Point
-box = sg.box
+# Convenience factory functions wrapping ``shapely.geometry``
+
+def Polygon(*args, **kwargs):
+    """Return a :class:`shapely.geometry.Polygon` instance."""
+
+    return sg.Polygon(*args, **kwargs)
+
+
+def Point(*args, **kwargs):
+    """Return a :class:`shapely.geometry.Point` instance."""
+
+    return sg.Point(*args, **kwargs)
+
+
+def box(*args, **kwargs):
+    """Return a rectangular polygon as defined by :func:`shapely.geometry.box`."""
+
+    return sg.box(*args, **kwargs)
+
 
 __all__ = ["sg", "Polygon", "Point", "box"]
