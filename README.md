@@ -29,7 +29,7 @@ from `parametric_cad/examples/`, for example:
 export PYTHONPATH=.
 python parametric_cad/examples/spur_gear_example.py
 ```
-You can also run all examples at once using `run_examples.py` or the `run_examples.bat` script on Windows.
+You can also run all examples at once using the cross-platform `run_examples.py` script.
 
 Generated STL files are written to `output/<example>_output/`.
 
