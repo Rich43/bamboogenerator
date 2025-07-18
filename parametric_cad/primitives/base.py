@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Self
 
 from parametric_cad.core import tm
 
@@ -10,12 +10,12 @@ class Primitive:
         self._position = (0.0, 0.0, 0.0)
         self._rotation: Optional[tuple[Sequence[float], float]] = None
 
-    def at(self, x: float, y: float, z: float):
+    def at(self, x: float, y: float, z: float) -> Self:
         """Translate the primitive to ``(x, y, z)``."""
         self._position = (x, y, z)
         return self
 
-    def rotate(self, axis: Sequence[float], angle: float):
+    def rotate(self, axis: Sequence[float], angle: float) -> Self:
         """Rotate the primitive around ``axis`` by ``angle`` radians."""
         self._rotation = (axis, angle)
         return self
