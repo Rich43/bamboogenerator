@@ -11,7 +11,8 @@ from .primitives.sphere import Sphere
 from .mechanisms.butthinge import ButtHinge
 from .export.stl import STLExporter
 from .printability import PrintabilityValidator
-from .scaffolding import generate_scaffolding
+from .scaffolding import generate_scaffolding, generate_scaffolding_from_workplane
+from .cadquery_utils import workplane_to_mesh
 
 __all__ = [
     "tm",
@@ -28,6 +29,8 @@ __all__ = [
     "STLExporter",
     "PrintabilityValidator",
     "generate_scaffolding",
+    "generate_scaffolding_from_workplane",
+    "workplane_to_mesh",
     "Polygon",
     "Point",
     "box",
