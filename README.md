@@ -55,6 +55,21 @@ unioned = combine(boxes)
 result = safe_difference(unioned, Cylinder(0.5, 1).mesh())
 ```
 
+## Overhang Scaffolding
+
+`generate_scaffolding` creates simple cylindrical supports beneath
+downward facing surfaces that exceed a chosen overhang angle.  The supports
+are meant to be easy to remove after printing.
+
+```python
+from parametric_cad import generate_scaffolding, Box, combine
+
+base = Box(20, 20, 10)
+ledge = Box(10, 10, 5).at(15, 5, 10)
+model = combine([base, ledge])
+supports = generate_scaffolding(model)
+```
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
