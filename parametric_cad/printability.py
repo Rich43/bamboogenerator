@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import List
 
 from .core import tm
+import cadquery as cq
+from .cadquery_utils import workplane_to_mesh
 import numpy as np
 
 
@@ -83,6 +85,12 @@ class PrintabilityValidator:
 
     def validate_file(self, file_path: str | Path) -> List[str]:
         mesh = tm.load(file_path)
+        return self.validate_mesh(mesh)
+
+    def validate_workplane(self, wp: cq.Workplane) -> List[str]:
+        """Validate a CadQuery Workplane."""
+
+        mesh = workplane_to_mesh(wp)
         return self.validate_mesh(mesh)
 
 

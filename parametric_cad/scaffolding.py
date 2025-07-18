@@ -3,6 +3,8 @@ from __future__ import annotations
 import numpy as np
 
 from .core import tm
+import cadquery as cq
+from .cadquery_utils import workplane_to_mesh
 
 
 def generate_scaffolding(
@@ -65,4 +67,14 @@ def generate_scaffolding(
     return tm.util.concatenate(supports)
 
 
-__all__ = ["generate_scaffolding"]
+def generate_scaffolding_from_workplane(
+    wp: cq.Workplane,
+    **kwargs,
+) -> tm.Trimesh:
+    """Convert a Workplane and generate scaffolding."""
+
+    mesh = workplane_to_mesh(wp)
+    return generate_scaffolding(mesh, **kwargs)
+
+
+__all__ = ["generate_scaffolding", "generate_scaffolding_from_workplane"]

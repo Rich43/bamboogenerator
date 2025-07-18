@@ -20,8 +20,22 @@ def install_openscad():
 def install_python_packages():
     logging.debug("Starting Python package installation process")
     print("Installing all required Python packages including triangulation engines...")
-    packages = ["trimesh", "numpy", "matplotlib", "pyglet<2", "networkx", "scipy", "shapely", 
-                "triangle", "mapbox_earcut", "manifold3d", "pillow", "requests", "beautifulsoup4"]
+    packages = [
+        "trimesh",
+        "cadquery",
+        "numpy",
+        "matplotlib",
+        "pyglet<2",
+        "networkx",
+        "scipy",
+        "shapely",
+        "triangle",
+        "mapbox_earcut",
+        "manifold3d",
+        "pillow",
+        "requests",
+        "beautifulsoup4",
+    ]
     try:
         subprocess.run([sys.executable, "-m", "pip", "install"] + packages, check=True)
         logging.info("Python packages installed successfully")
