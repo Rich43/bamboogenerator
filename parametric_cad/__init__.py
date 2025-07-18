@@ -10,6 +10,7 @@ from .primitives.sprocket import ChainSprocket
 from .primitives.sphere import Sphere
 from .mechanisms.butthinge import ButtHinge
 from .export.stl import STLExporter
+from .printability import PrintabilityValidator
 
 __all__ = [
     "tm",
@@ -24,6 +25,7 @@ __all__ = [
     "ChainSprocket",
     "ButtHinge",
     "STLExporter",
+    "PrintabilityValidator",
     "Polygon",
     "Point",
     "box",
