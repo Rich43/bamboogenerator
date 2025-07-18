@@ -11,6 +11,7 @@ from .primitives.sphere import Sphere
 from .mechanisms.butthinge import ButtHinge
 from .export.stl import STLExporter
 from .printability import PrintabilityValidator
+from .scaffolding import generate_scaffolding
 
 __all__ = [
     "tm",
@@ -26,6 +27,7 @@ __all__ = [
     "ButtHinge",
     "STLExporter",
     "PrintabilityValidator",
+    "generate_scaffolding",
     "Polygon",
     "Point",
     "box",
