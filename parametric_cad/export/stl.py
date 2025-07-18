@@ -5,13 +5,16 @@ import numpy as np
 from pathlib import Path
 from datetime import datetime
 
+from parametric_cad.printability import PrintabilityValidator
+
 class STLExporter:
     """Export trimesh objects to STL with optional previews."""
 
-    def __init__(self, output_dir="output", binary=False):
+    def __init__(self, output_dir: str = "output", binary: bool = False) -> None:
         self.output_dir = output_dir
         self.binary = binary
         os.makedirs(self.output_dir, exist_ok=True)
+        self.validator = PrintabilityValidator()
 
     def _ensure_mesh(self, obj):
         if isinstance(obj, tm.Trimesh):
@@ -34,6 +37,12 @@ class STLExporter:
                 combined = repaired
             else:
                 combined = combined.convex_hull
+
+        errors = self.validator.validate_mesh(combined)
+        if errors:
+            raise ValueError(
+                "Printability validation failed: " + ", ".join(errors)
+            )
 
         filename = f"{base_filename}.stl"
         if timestamp:
